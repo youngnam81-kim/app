@@ -1,4 +1,4 @@
-package com.project.app.util;
+package com.project.app.config.util;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
