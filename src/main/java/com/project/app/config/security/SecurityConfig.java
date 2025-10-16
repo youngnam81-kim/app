@@ -31,13 +31,12 @@ public class SecurityConfig {
 	                        "/public/**",           // Spring Boot 기본 정적 리소스 경로 (public 폴더 하위)
 	                        "/webjars/**",          // WebJars 사용 시
 	                        "/error",               // 에러 페이지
-
-	                        "/login"                // 로그인 페이지 (폼 로그인 시)
-							).permitAll() // API 경로는 모두 허용
+	                        "/login"                // 로그인 페이지 (폼 로그인 시)              // 로그인 페이지 (폼 로그인 시)
+	                        ).permitAll() 
 					.anyRequest().authenticated() // 그 외 요청은 인증 필요
 			).addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), 
                     UsernamePasswordAuthenticationFilter.class);
-		http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+		http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)); // <-- 세션 STATELESS 확인
 		return http.build();
 	}
 	
