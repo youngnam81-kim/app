@@ -9,6 +9,6 @@ import com.project.app.user.entity.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
+	boolean existsByUserId(String userId);
     Optional<User> findByUserId(String userId);
-    boolean existsByUserId(String userId);
 }

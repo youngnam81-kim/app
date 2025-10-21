@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.app.board.mapper.BoardMapper">
+    <select id="selectAllBoards" resultType="BoardDto">
+		SELECT
+		ID,
+		TITLE,
+		CONTENT,
+		AUTHOR,
+		CREATE_DATE,
+		UPDATE_DATE,
+		DELETE_DATE,
+		END_DATE,
+		VIEW_COUNT,
+		CATEGORY
+		FROM API_BOARD
+    </select>
+    
+    <select id="selectBoardById" parameterType="java.lang.Long" resultType="BoardDto">
+		SELECT
+		ID,
+		TITLE,
+		CONTENT,
+		AUTHOR,
+		CREATE_DATE,
+		UPDATE_DATE,
+		DELETE_DATE,
+		END_DATE,
+		VIEW_COUNT,
+		CATEGORY
+		FROM API_BOARD
+		WHERE id = #{id}
+    </select>
+    
+    <select id="selectBoardByIdAndAuthor" resultType="BoardDto">
+		SELECT
+		ID,
+		TITLE,
+		CONTENT,
+		AUTHOR,
+		CREATE_DATE,
+		UPDATE_DATE,
+		DELETE_DATE,
+		END_DATE,
+		VIEW_COUNT,
+		CATEGORY
+		FROM API_BOARD
+		WHERE id = #{id}
+		AND AUTHOR = #{author}
+    </select>
+    
+    <insert id="insertBoardList" parameterType="BoardDto">
+	    <selectKey keyProperty="id" resultType="long" order="BEFORE">
+        	SELECT "ADMIN"."ISEQ$$_117555".nextval AS ID FROM DUAL
+    	</selectKey>
+       	INSERT INTO API_BOARD(ID, TITLE, CONTENT, AUTHOR, CREATE_DATE, UPDATE_DATE)
+    	VALUES (#{id}, #{title}, #{content}, #{author}, SYSDATE, SYSDATE)
+    </insert>
+    
+    <update id="updateBoardList" parameterType="BoardDto">
+    	UPDATE API_BOARD
+    	SET 
+    		TITLE = #{title},
+    		CONTENT = #{content},
+    		AUTHOR = #{author}
+		WHERE ID = #{id}    		
+    </update>
+    	
+    <delete id="deleteBoardList" parameterType="BoardDto">
+    	DELETE FROM API_BOARD
+    	WHERE ID = #{id}
+    </delete>
+    
+</mapper>
+<!--
+    <select id="selectBoardById" parameterType="long" resultType="com.project.app.board.dto.BoardDto">
+        SELECT 
+            id, 
+            title, 
+            content, 
+            author, 
+            created_at as createdAt, 
+            updated_at as updatedAt, 
+            view_count as viewCount, 
+            category 
+        FROM TB_BOARD 
+        WHERE id = #{id}
+    </select>
+    
+	<insert id="insertBoard" parameterType="com.yourcompany.board.dto.BoardDto"
+        useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO TB_BOARD (
+            title, 
+            content, 
+            author, 
+            created_at, 
+            view_count, 
+            category
+        ) VALUES (
+            #{title}, 
+            #{content}, 
+            #{author}, 
+            #{createdAt}, 
+            #{viewCount}, 
+            #{category}
+        )
+    </insert>
+    
+    <update id="updateBoard" parameterType="com.project.app.board.dto.BoardDto">
+        UPDATE TB_BOARD 
+        SET 
+            title = #{title}, 
+            content = #{content}, 
+            updated_at = #{updatedAt}
+            <if test="category != null">, category = #{category}</if>
+        WHERE id = #{id}
+    </update>
+    
+    <delete id="deleteBoard" parameterType="long">
+        DELETE FROM TB_BOARD WHERE id = #{id}
+    </delete>
+    
+    <select id="selectBoardsByCategory" parameterType="string" resultType="com.project.app.board.dto.BoardDto">
+        SELECT 
+            id, 
+            title, 
+            content, 
+            author, 
+            created_at as createdAt, 
+            updated_at as updatedAt, 
+            view_count as viewCount, 
+            category 
+        FROM TB_BOARD 
+        WHERE category = #{category}
+        ORDER BY created_at DESC
+    </select>
+    
+    <update id="increaseViewCount" parameterType="long">
+        UPDATE TB_BOARD 
+        SET view_count = view_count + 1 
+        WHERE id = #{id}
+    </update>
+
+</mapper>
+-->

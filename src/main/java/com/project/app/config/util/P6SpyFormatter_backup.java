@@ -8,17 +8,16 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class P6SpyFormatter implements MessageFormattingStrategy {
+public class P6SpyFormatter_backup implements MessageFormattingStrategy {
 
-	@Override
+    @Override
     public String formatMessage(int connectionId, String now, long elapsed, String category, String prepared, String sql, String url) {
         sql = formatSql(category, sql);
         
-        if (Category.COMMIT.getName().equals(category)) {
-            return "";  // COMMIT 로그는 출력 안 함
+        if (Category.COMMIT.getName().equals(category) || 
+                Category.STATEMENT.getName().equals(category)) {
+                return "";  // 빈 문자열 반환하여 로그 출력 안 함
         }
-        
-        // STATEMENT 카테고리도 출력하도록 변경
         
         Date _now = new Date();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
@@ -30,7 +29,7 @@ public class P6SpyFormatter implements MessageFormattingStrategy {
     private String formatSql(String category, String sql) {
         if (sql == null || sql.trim().equals("")) return sql;
         
-        // MyBatis와 Hibernate 로그 모두 포맷팅
+        // 로그를 보기 좋게 포맷팅 (category가 statement일 경우)
         if (Category.STATEMENT.getName().equals(category)) {
             String tmpsql = sql.trim().toLowerCase(Locale.ROOT);
             if (tmpsql.startsWith("create") || tmpsql.startsWith("alter") || tmpsql.startsWith("comment")) {
@@ -38,13 +37,7 @@ public class P6SpyFormatter implements MessageFormattingStrategy {
             } else {
                 sql = FormatStyle.BASIC.getFormatter().format(sql);
             }
-            
-            // 쿼리 출처 확인 (간단한 방법)
-            if (sql.contains("Hibernate")) {
-                sql = "|\nHibernate: " + sql;
-            } else {
-                sql = "|\nMyBatis: " + sql;
-            }
+            sql = "|\nHibernate: " + sql;
         }
         
         return sql;
