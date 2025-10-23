@@ -15,10 +15,6 @@ public interface BoardService {
 	void deleteBoardList(BoardDto boardDto);
     
     /*
-    void addBoard(BoardDto board);
-    void updateBoard(BoardDto board);
-    void deleteBoard(Long id);
     List<BoardDto> getBoardsByCategory(String category);
 	*/
-	;
 }

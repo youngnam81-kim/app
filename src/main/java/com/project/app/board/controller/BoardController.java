@@ -31,7 +31,7 @@ public class BoardController {
     }
 
     // http://localhost:8080/api/boards/2
-    @GetMapping("/{id}")
+    @GetMapping("/id/{id}")
     public ResponseEntity<List<BoardDto>> getBoardById(@PathVariable Long id) {
     	List<BoardDto> board = boardService.getBoardById(id);
         if (board != null) {
@@ -64,6 +64,19 @@ public class BoardController {
         }
     }
     
+    // http://localhost:8080/api/boards/1?author=admin //이럴경우 스프링 시큐리티에 문제가 생긴다.
+    /*
+    @GetMapping("/{id}")
+    public ResponseEntity<List<BoardDto>> getBoardByIdAndAuthor(@PathVariable Long id, @RequestParam String author) {
+    	List<BoardDto> board = boardService.getBoardByIdAndAuthor(id, author);
+        if (board != null) {
+            return ResponseEntity.ok(board);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    */
+    
     @PostMapping("/createBoardList")
     public ResponseEntity<BoardDto> createBoardList(@RequestBody BoardDto boardDto){
     	boardService.createBoardList(boardDto);
@@ -89,19 +102,6 @@ public class BoardController {
     	boardService.deleteBoardList(boardDto);
     	return ResponseEntity.ok(null);
     }
-    
- // http://localhost:8080/api/boards/1?author=admin //이럴경우 스프링 시큐리티에 문제가 생긴다.
-    /*
-    @GetMapping("/{id}")
-    public ResponseEntity<List<BoardDto>> getBoardByIdAndAuthor(@PathVariable Long id, @RequestParam String author) {
-    	List<BoardDto> board = boardService.getBoardByIdAndAuthor(id, author);
-        if (board != null) {
-            return ResponseEntity.ok(board);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
-    */
     
     /*
     @GetMapping("/category/{category}")
