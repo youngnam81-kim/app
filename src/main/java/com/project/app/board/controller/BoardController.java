@@ -103,7 +103,7 @@ public class BoardController {
     	return ResponseEntity.ok(null);
     }
     
-    /*
+    /* 
     @GetMapping("/category/{category}")
     public ResponseEntity<List<BoardDto>> getBoardsByCategory(@PathVariable String category) {
         return ResponseEntity.ok(boardService.getBoardsByCategory(category));
