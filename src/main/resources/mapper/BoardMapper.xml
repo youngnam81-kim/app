@@ -29,7 +29,7 @@
 		VIEW_COUNT,
 		CATEGORY
 		FROM API_BOARD
-		WHERE id = #{id}
+		WHERE ID = #{id}
     </select>
     
     <insert id="insertBoard" parameterType="BoardDto">
