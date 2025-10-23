@@ -22,7 +22,7 @@ public class UserController {
 		this.userService = userService;
 	}
 
-	@PostMapping("/userReg")
+	@PostMapping
 	public ResponseEntity<?> insertUser(@RequestBody UserRequestDto userRequestDto) {
 		try {
 			if (userRequestDto.getUserId() == null || userRequestDto.getPassword() == null) {

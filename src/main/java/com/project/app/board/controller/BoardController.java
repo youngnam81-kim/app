@@ -2,6 +2,7 @@ package com.project.app.board.controller;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,57 +53,31 @@ public class BoardController {
             return ResponseEntity.notFound().build();
         }
     }
-    
-    // http://localhost:8080/api/boards/1/admin
-    @GetMapping("/{id}/{author}")
-    public ResponseEntity<List<BoardDto>> getBoardByIdAndAuthor(@PathVariable Long id, @PathVariable String author) {
-    	List<BoardDto> board = boardService.getBoardByIdAndAuthor(id, author);
-        if (board != null) {
-            return ResponseEntity.ok(board);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+
+    @PostMapping
+    public ResponseEntity<BoardDto> createBoard(@RequestBody BoardDto boardDto){
+    	boardService.createBoard(boardDto);
+    	return ResponseEntity.status(HttpStatus.CREATED).body(boardDto);
     }
-    
-    // http://localhost:8080/api/boards/1?author=admin //이럴경우 스프링 시큐리티에 문제가 생긴다.
-    /*
-    @GetMapping("/{id}")
-    public ResponseEntity<List<BoardDto>> getBoardByIdAndAuthor(@PathVariable Long id, @RequestParam String author) {
-    	List<BoardDto> board = boardService.getBoardByIdAndAuthor(id, author);
-        if (board != null) {
-            return ResponseEntity.ok(board);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
-    */
-    
-    @PostMapping("/createBoardList")
-    public ResponseEntity<BoardDto> createBoardList(@RequestBody BoardDto boardDto){
-    	boardService.createBoardList(boardDto);
-    	return ResponseEntity.ok(boardDto);
-    }
-    
-    @PostMapping("/insertBoardList")
-    public ResponseEntity<BoardDto> insertBoardList(@RequestBody BoardDto boardDto){
-    	boardService.insertBoardList(boardDto);
-    	return ResponseEntity.ok(boardDto);
-    }
-    
+   
+//    @PostMapping("/createBoardList")
+//    public ResponseEntity<BoardDto> createBoardList(@RequestBody BoardDto boardDto){
+//    	boardService.createBoardList(boardDto);
+//    	return ResponseEntity.ok(boardDto);
+//    }
+
     @PutMapping("/{id}")
-    public ResponseEntity<BoardDto> updateBoardList(@PathVariable Long id, @RequestBody BoardDto boardDto){
+    public ResponseEntity<BoardDto> updateBoard(@PathVariable Long id, @RequestBody BoardDto boardDto){
     	boardDto.setId(id);
-    	boardService.updateBoardList(boardDto);
+    	boardService.updateBoard(boardDto);
     	return ResponseEntity.ok(boardDto);
     }
     
     @DeleteMapping("/{id}")
-    public ResponseEntity<BoardDto> deleteBoardList(@PathVariable Long id, @RequestBody BoardDto boardDto){
-    	boardDto.setId(id);
-    	boardService.deleteBoardList(boardDto);
-    	return ResponseEntity.ok(null);
+    public ResponseEntity<Void> deleteBoardById(@PathVariable Long id){
+        boardService.deleteBoardById(id);
+        return ResponseEntity.ok().build(); // 응답 본문 없이 200 OK 반환
     }
-    
     /* 
     @GetMapping("/category/{category}")
     public ResponseEntity<List<BoardDto>> getBoardsByCategory(@PathVariable String category) {

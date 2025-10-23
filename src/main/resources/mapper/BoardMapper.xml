@@ -32,24 +32,7 @@
 		WHERE id = #{id}
     </select>
     
-    <select id="selectBoardByIdAndAuthor" resultType="BoardDto">
-		SELECT
-		ID,
-		TITLE,
-		CONTENT,
-		AUTHOR,
-		CREATE_DATE,
-		UPDATE_DATE,
-		DELETE_DATE,
-		END_DATE,
-		VIEW_COUNT,
-		CATEGORY
-		FROM API_BOARD
-		WHERE id = #{id}
-		AND AUTHOR = #{author}
-    </select>
-    
-    <insert id="insertBoardList" parameterType="BoardDto">
+    <insert id="insertBoard" parameterType="BoardDto">
 	    <selectKey keyProperty="id" resultType="long" order="BEFORE">
         	SELECT "ADMIN"."ISEQ$$_117555".nextval AS ID FROM DUAL
     	</selectKey>
@@ -57,7 +40,7 @@
     	VALUES (#{id}, #{title}, #{content}, #{author}, SYSDATE, SYSDATE)
     </insert>
     
-    <update id="updateBoardList" parameterType="BoardDto">
+    <update id="updateBoard" parameterType="BoardDto">
     	UPDATE API_BOARD
     	SET 
     		TITLE = #{title},
@@ -65,8 +48,8 @@
     		AUTHOR = #{author}
 		WHERE ID = #{id}    		
     </update>
-    	
-    <delete id="deleteBoardList" parameterType="BoardDto">
+    
+    <delete id="deleteBoardById" parameterType="Long">
     	DELETE FROM API_BOARD
     	WHERE ID = #{id}
     </delete>

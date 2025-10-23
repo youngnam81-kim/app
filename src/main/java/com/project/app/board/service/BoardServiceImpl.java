@@ -31,34 +31,33 @@ public class BoardServiceImpl implements BoardService {
 		return boardMapper.selectBoardByAuthor(author);
 	}
 	
-	@Override
-	public List<BoardDto> getBoardByIdAndAuthor(Long id, String Author) {
-		return boardMapper.selectBoardByIdAndAuthor(id,Author);
-	}
+//	@Override
+//	public List<BoardDto> getBoardByIdAndAuthor(Long id, String Author) {
+//		return boardMapper.selectBoardByIdAndAuthor(id,Author);
+//	}
 
 	@Override
 	@Transactional
-	public void createBoardList(BoardDto boardDto) {
-		boardMapper.createBoardList(boardDto);
+	public void createBoard(BoardDto boardDto) {
+		boardMapper.insertBoard(boardDto);
 	}
-	
+//	@Override
+//	@Transactional
+//	public void createBoardList(BoardDto boardDto) {
+//		boardMapper.createBoardList(boardDto);
+//	}
+		
 	@Override
 	@Transactional
-	public void insertBoardList(BoardDto boardDto) {
-		boardMapper.insertBoardList(boardDto);
-	}
-	
-	@Override
-	@Transactional
-	public BoardDto updateBoardList(BoardDto boardDto) {
-		boardMapper.updateBoardList(boardDto);
+	public BoardDto updateBoard(BoardDto boardDto) {
+		boardMapper.updateBoard(boardDto);
 		return boardDto;
 	}
 	
 	@Override
 	@Transactional
-	public void deleteBoardList(BoardDto boardDto) {
-		boardMapper.deleteBoardList(boardDto);
+	public void deleteBoardById(Long id) {
+		boardMapper.deleteBoardById(id);
 	}
 	
 /*
